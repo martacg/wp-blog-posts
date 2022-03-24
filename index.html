@@ -1,0 +1,26 @@
+<div id="app"></div>
+
+<script type="text/javascript">
+
+    const url ='https://martagonzalez.dev/blog/'
+    const api ='https://martagonzalez.dev/wp-json/wp/v2/posts?per_page=100&context=embed'
+
+    const fn = async () => {
+
+        const HTMLResponse = document.querySelector("#app");
+
+        const response = await fetch(api)
+        const data =  await response.json()
+        const mapped = data.map((element) => `
+            <p>
+                <a href='${url}${element.slug}' title='${element.title.rendered}' target='_blank'>
+                    ${element.title.rendered}
+                </a>
+            </p>`)
+        HTMLResponse.innerHTML = `<div>${mapped.join("")}</div>`
+
+    }
+
+    fn()
+
+</script>
